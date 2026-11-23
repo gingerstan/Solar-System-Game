@@ -18,6 +18,13 @@ class Bus:
         for fn, params in zip_longest(self.subscribers[event_name], args):
             outputs.append(fn(*params) if params else fn())
 
+        return outputs
+
+    # takes a dict with function keys, containing the arguments to be
+    # supplied to their corresponding function.
+    def cooler_call(self, event_name: str, args_dict: dict[Callable[..., Any], list[Any]]):
+        pass
+
     def print_call_order(self,event_name):
         print(self.subscribers[event_name])
 

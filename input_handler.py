@@ -40,11 +40,10 @@ class InputHandler:
 					self.shift = False
 
 			# if event.type == py.KEYDOWN:
-			# 	if event.key == py.K_w:
+			# 	if event.key == py.K_t:
 
-		
 			# if event.type == py.KEYUP:
-			# 	if event.key == py.K_w:
+			# 	if event.key == py.K_t:
 
 
 			if event.type == py.MOUSEBUTTONDOWN:
@@ -81,6 +80,9 @@ class InputHandler:
 
 	def space_bar_click(self):
 		return not self.space and self.space_prev
+
+	def shift_click(self):
+		return not self.shift and self.shift_prev
 
 	def update(self):
 		self.left_mouse_prev = self.left_mouse

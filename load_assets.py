@@ -2,6 +2,8 @@ import pygame as py
 import pathlib
 
 py.init()
+py.display.set_caption("solar system something")
+screen = py.display.set_mode((1000,1000), 0, 32)
 
 white = (255,255,255)
 
@@ -13,7 +15,7 @@ for asset_path in pathlib.Path('assets').iterdir():
 		asset = py.image.load(asset_path)
 		asset.set_colorkey(white)
 		asset.convert()
-		asset_dict[f"{asset_path.stem}"] = asset
+		assets[f"{asset_path.stem}"] = asset
 
 
 def scale_by(image_name,scale):
