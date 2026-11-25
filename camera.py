@@ -3,7 +3,7 @@ import sys
 from enum import Enum
 
 from configs import *
-from pygame import MOUSEWHEEL, SRCALPHA, Event, Surface, Vector2
+from pygame import MOUSEWHEEL, SRCALPHA, event, Surface, Vector2
 import pygame as py
 from pygame.sprite import Group, Sprite
 from load_assets import assets
@@ -11,10 +11,10 @@ from physics import Body
 
 
 class Camera(Group):
-	def __init__(self,screen,keys):
+	def __init__(self,keys):
 		super().__init__()
 
-		self.screen = screen
+		self.screen = py.display.get_surface()
 		self.keys = keys
 
 		self.offset = py.math.Vector2()
@@ -54,22 +54,22 @@ class Camera(Group):
 			self.offset.x += KEYBOARD_SPEED
 			self.screen_moved = True
 
-	def draw(self,scale):
+	def draw(self):
 		self.controls()
-
+		scale = 3e-11
 		self.camera_surf.fill((0,0,0))
 
 		bg_offset = self.bg_rect.topleft - self.offset + self.camera_offset
 		self.camera_surf.blit(self.bg_surf,bg_offset)
 
 		for sprite in self.sprites():
-			offset_pos = sprite.draw() - self.offset + self.camera_offset
+			offset_pos = sprite.get_rect() - self.offset + self.camera_offset
 
 			screen_x = int(3 * offset_pos.x) + 5000
 			screen_y = int(3 * offset_pos.y) + 5000
 
 			rect = py.transform.scale_by(sprite.image,scale)
-			self.camera_surf.blit(sprite.image,(screen_x,screen_y))
+			self.camera_surf.blit(sprite.image,(screen_x-(sprite.image.get_width()/2),screen_y-(sprite.image.get_height()/2)))
 
 			if not self.screen_moved:
 				sprite.trail.append((screen_x,screen_y))
